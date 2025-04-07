@@ -4,18 +4,22 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import "reflect-metadata";
 import { config } from "./config/config";
-// import { authRouter } from './routes/auth.routes';
+import { AuthRoutes } from "./routes/auth-routes";
 
 const app: Application = express();
 
+// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(helmet());
 app.use(cors(config.cors));
 
-// Rutas
-// app.use('/api/auth', authRouter);
+// Initialize routes
+const authRouter = new AuthRoutes().getRouter();
+
+// Routes
+app.use("/api/auth", authRouter);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);

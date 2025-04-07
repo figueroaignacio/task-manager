@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { config } from "../config/config";
-// import { User } from '../entities/user.entity';
-// import { RefreshToken } from '../entities/refresh-token.entity';
+import { RefreshToken } from "../entities/refresh-token-entity";
+import { User } from "../entities/user-entity";
 
 export const AppDataSource = new DataSource({
-  type: config.db.type as any,
+  type: "postgres",
   host: config.db.host,
   port: config.db.port,
   username: config.db.username,
@@ -13,7 +13,7 @@ export const AppDataSource = new DataSource({
   database: config.db.database,
   synchronize: config.db.synchronize,
   logging: config.db.logging,
-  entities: [],
+  entities: [User, RefreshToken],
 });
 
 export const initializeDatabase = async (): Promise<DataSource> => {
