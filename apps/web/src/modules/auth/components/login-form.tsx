@@ -1,20 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { loginUser } from "../api";
-import { LoginSchema, loginSchema } from "../lib/schema";
+import { useAuth } from "../hooks/use-auth";
+import { loginSchema, type LoginSchema } from "../lib/schema";
 
 export function LoginForm() {
   const [serverError, setServerError] = useState<string | null>(null);
-  const navigate = useNavigate();
+  const { login, isLoading } = useAuth();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm({
+  } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -22,76 +20,69 @@ export function LoginForm() {
     },
   });
 
-  const loginMutation = useMutation({
-    mutationFn: loginUser,
-    onSuccess: () => {
-      navigate("/dashboard");
-    },
-    onError: (error: Error) => {
-      setServerError(error.message);
-    },
-  });
-
   const onSubmit = async (data: LoginSchema) => {
     setServerError(null);
-    loginMutation.mutate({
-      email: data.email,
-      password: data.password,
-    });
+    try {
+      await login(data.email, data.password);
+      // No necesitamos hacer navigate aquí porque login ya lo maneja en el AuthProvider
+    } catch (error) {
+      setServerError(
+        error instanceof Error ? error.message : "Error de autenticación"
+      );
+    }
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Log In</h2>
+    <div className="mx-auto max-w-md space-y-6 p-8 rounded-lg shadow-md">
+      <h1 className="text-2xl font-bold text-center">Log In</h1>
+
       {serverError && (
-        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+        <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
           {serverError}
         </div>
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div>
-          <label htmlFor="email" className="block mb-1 font-medium">
+        <div className="space-y-2">
+          <label htmlFor="email" className="block text-sm font-medium">
             Email
           </label>
           <input
             id="email"
             type="email"
+            className="w-full p-2 border rounded"
             {...register("email")}
-            className="w-full px-3 py-2 border rounded-md"
           />
           {errors.email && (
-            <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+            <p className="text-sm text-red-600">{errors.email.message}</p>
           )}
         </div>
 
-        <div>
-          <label htmlFor="password" className="block mb-1 font-medium">
+        <div className="space-y-2">
+          <label htmlFor="password" className="block text-sm font-medium">
             Password
           </label>
           <input
             id="password"
             type="password"
+            className="w-full p-2 border rounded"
             {...register("password")}
-            className="w-full px-3 py-2 border rounded-md"
           />
           {errors.password && (
-            <p className="mt-1 text-sm text-red-600">
-              {errors.password.message}
-            </p>
+            <p className="text-sm text-red-600">{errors.password.message}</p>
           )}
         </div>
 
         <button
           type="submit"
-          disabled={isSubmitting || loginMutation.isPending}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-70"
+          disabled={isSubmitting || isLoading}
+          className="w-full p-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
         >
-          {isSubmitting || loginMutation.isPending ? "Logging in..." : "Log In"}
+          {isSubmitting || isLoading ? "Logging in..." : "Log In"}
         </button>
       </form>
 
-      <div className="mt-4 text-center">
+      <div className="text-center text-sm">
         <a href="/auth/register" className="text-blue-600 hover:underline">
           Don't have an account? Register
         </a>

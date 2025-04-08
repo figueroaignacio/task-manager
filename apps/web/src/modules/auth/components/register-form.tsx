@@ -1,14 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { registerUser } from "../api";
+import { useAuth } from "../hooks/use-auth";
 import { RegisterSchema, registerSchema } from "../lib/schema";
 
 export function RegisterForm() {
   const [serverError, setServerError] = useState<string | null>(null);
-  const navigate = useNavigate();
+  const { register: registerUser, isLoading } = useAuth();
 
   const {
     register,
@@ -23,24 +21,17 @@ export function RegisterForm() {
     },
   });
 
-  const registerMutation = useMutation({
-    mutationFn: registerUser,
-    onSuccess: () => {
-      navigate("/auth/login", {
-        state: { message: "Registration successful. You can now log in." },
-      });
-    },
-    onError: (error: Error) => {
-      setServerError(error.message);
-    },
-  });
-
   const onSubmit = async (data: RegisterSchema) => {
     setServerError(null);
-    registerMutation.mutate({
-      email: data.email,
-      password: data.password,
-    });
+    try {
+      await registerUser(data.email, data.password);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setServerError(error.message);
+      } else {
+        setServerError("Something went wrong");
+      }
+    }
   };
 
   return (
@@ -50,12 +41,6 @@ export function RegisterForm() {
       {serverError && (
         <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
           {serverError}
-        </div>
-      )}
-
-      {registerMutation.isSuccess && (
-        <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
-          Registration successful. You can log in now.
         </div>
       )}
 
@@ -93,20 +78,15 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <button
-            type="submit"
-            disabled={isSubmitting || registerMutation.isPending}
-          >
-            {isSubmitting || registerMutation.isPending
-              ? "Registering..."
-              : "Register"}
+          <button type="submit" disabled={isSubmitting || isLoading}>
+            {isSubmitting || isLoading ? "Registering..." : "Register"}
           </button>
         </div>
       </form>
 
       <div className="">
         <p className="">
-          Already have an account? <a href="/login">Log in</a>
+          Already have an account? <a href="/auth/login">Log in</a>
         </p>
       </div>
     </div>

@@ -1,51 +1,71 @@
 import { API_URL } from "@/lib/constants";
+import { User } from "@/modules/auth/lib/definitions";
 
-type RegisterResponse = {
-  message: string;
-  user: {
-    id: string;
-    email: string;
-  };
-};
-
-export async function registerUser(data: {
-  email: string;
-  password: string;
-}): Promise<RegisterResponse> {
-  const response = await fetch(`${API_URL}/auth/register`, {
-    method: "POST",
+export async function getCurrentUser(): Promise<User | null> {
+  const response = await fetch(`${API_URL}/auth/me`, {
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify(data),
   });
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Error en el registro");
+  if (response.ok) {
+    const userData = await response.json();
+    return userData;
+  } else if (response.status === 401) {
+    return null;
+  } else {
+    throw new Error("Error al obtener datos del usuario");
   }
-
-  return response.json();
 }
 
-export async function loginUser(credentials: {
-  email: string;
-  password: string;
-}) {
+export async function login(email: string, password: string): Promise<boolean> {
   const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify(credentials),
+    body: JSON.stringify({ email, password }),
   });
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to login");
+    throw new Error(errorData.message || "Error al iniciar sesión");
   }
 
-  return response.json();
+  return true;
+}
+
+export async function register(
+  email: string,
+  password: string
+): Promise<boolean> {
+  const response = await fetch(`${API_URL}/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Error al registrar usuario");
+  }
+
+  return true;
+}
+
+export async function logout(): Promise<void> {
+  try {
+    await fetch(`${API_URL}/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
+  } catch (error) {
+    console.error("Error al cerrar sesión:", error);
+    throw error;
+  }
 }
