@@ -12,12 +12,12 @@ export function AppRouter() {
   return (
     <Routes>
       <Route index element={<HomePage />} />
-      <Route path="auth">
-        <Route element={<AuthLayout />}>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-        </Route>
+      {/* <Route path="auth"> */}
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Route>
+      {/* </Route> */}
     </Routes>
   );
 }
