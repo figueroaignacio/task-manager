@@ -41,9 +41,6 @@ importers:
         specifier: ^0.3.22
         version: 0.3.22(pg@8.14.1)(reflect-metadata@0.2.2)(ts-node@10.9.2(@swc/core@1.11.16)(@types/node@22.14.0)(typescript@5.7.3))
     devDependencies:
-      '@types/bcrypt':
-        specifier: ^5.0.2
-        version: 5.0.2
       '@types/bcryptjs':
         specifier: ^3.0.0
         version: 3.0.0
@@ -74,6 +71,12 @@ importers:
 
   apps/web:
     dependencies:
+      '@fontsource-variable/open-sans':
+        specifier: ^5.2.5
+        version: 5.2.5
+      '@fontsource/poppins':
+        specifier: ^5.2.5
+        version: 5.2.5
       '@hookform/resolvers':
         specifier: ^5.0.1
         version: 5.0.1(react-hook-form@7.55.0(react@19.1.0))
@@ -351,6 +354,12 @@ packages:
   '@eslint/plugin-kit@0.2.8':
     resolution: {integrity: sha512-ZAoA40rNMPwSm+AeHpCq8STiNAwzWLJuP8Xv4CHIc9wv/PSuExjMrmjfYNj682vW0OOiZ1HKxzvjQr9XZIisQA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fontsource-variable/open-sans@5.2.5':
+    resolution: {integrity: sha512-++xRfkZAxNP4e1Spm5W11iVcoYfXcNVTV5MDit60t7grRk10hy9C7XQd/jv+0TDFIfHbK9EzyBp3M3CHPesroA==}
+
+  '@fontsource/poppins@5.2.5':
+    resolution: {integrity: sha512-1S3k45pZOz2jqGPPqKw0in3uxFwnB+d5jSU8Tp9YwH/dIJptE3jdkQbYN0QD861GtuOpn6QhPW/yKt1w7hVRBQ==}
 
   '@hookform/resolvers@5.0.1':
     resolution: {integrity: sha512-u/+Jp83luQNx9AdyW2fIPGY6Y7NG68eN2ZW8FOJYL+M0i4s49+refdJdOp/A9n9HFQtQs3HIDHQvX3ZET2o7YA==}
@@ -685,9 +694,6 @@ packages:
 
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
-
-  '@types/bcrypt@5.0.2':
-    resolution: {integrity: sha512-6atioO8Y75fNcbmj0G7UjI9lXN2pQ/IGJ2FWT4a/btd0Lk9lQalHLKhkgKVZ3r+spnmWUKfbMi1GEe9wyHQfNQ==}
 
   '@types/bcryptjs@3.0.0':
     resolution: {integrity: sha512-WRZOuCuaz8UcZZE4R5HXTco2goQSI2XxjGY3hbM/xDvwmqFWd4ivooImsMx65OKM6CtNKbnZ5YL+YwAwK7c1dg==}
@@ -2193,6 +2199,10 @@ snapshots:
       '@eslint/core': 0.13.0
       levn: 0.4.1
 
+  '@fontsource-variable/open-sans@5.2.5': {}
+
+  '@fontsource/poppins@5.2.5': {}
+
   '@hookform/resolvers@5.0.1(react-hook-form@7.55.0(react@19.1.0))':
     dependencies:
       '@standard-schema/utils': 0.3.0
@@ -2435,10 +2445,6 @@ snapshots:
   '@tsconfig/node14@1.0.3': {}
 
   '@tsconfig/node16@1.0.4': {}
-
-  '@types/bcrypt@5.0.2':
-    dependencies:
-      '@types/node': 22.14.0
 
   '@types/bcryptjs@3.0.0':
     dependencies:
