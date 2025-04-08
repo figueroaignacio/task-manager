@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 
 // Layouts
 import { AuthLayout } from "@/layouts/auth-layout";
+import { LobbyLayout } from "@/layouts/lobby-layout";
 
 // Pages
 import { DashboardPage } from "@/pages/dashboard";
@@ -16,7 +17,9 @@ import { RedirectIfAuthenticated } from "@/modules/auth/components/redirect-if-a
 export function AppRouter() {
   return (
     <Routes>
-      <Route index element={<HomePage />} />
+      <Route element={<LobbyLayout />}>
+        <Route index element={<HomePage />} />
+      </Route>
 
       <Route element={<RedirectIfAuthenticated />}>
         <Route path="/auth" element={<AuthLayout />}>
