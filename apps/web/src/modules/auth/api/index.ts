@@ -28,3 +28,24 @@ export async function registerUser(data: {
 
   return response.json();
 }
+
+export async function loginUser(credentials: {
+  email: string;
+  password: string;
+}) {
+  const response = await fetch(`${API_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(credentials),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to login");
+  }
+
+  return response.json();
+}

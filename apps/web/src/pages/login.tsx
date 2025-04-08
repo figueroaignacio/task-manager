@@ -1,3 +1,5 @@
+import { LoginForm } from "@/modules/auth/components/login-form";
+
 export function LoginPage() {
-  return <section>Login Page</section>;
+  return <LoginForm />;
 }
