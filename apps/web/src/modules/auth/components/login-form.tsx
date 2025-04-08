@@ -35,12 +35,6 @@ export function LoginForm() {
 
   return (
     <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-8 shadow-lg dark:border-gray-800 dark:bg-gray-900">
-      {/* Background decoration */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 -right-40 h-64 w-64 rounded-full bg-purple-100 opacity-20 blur-3xl dark:bg-purple-900"></div>
-        <div className="absolute -bottom-40 -left-40 h-64 w-64 rounded-full bg-blue-100 opacity-20 blur-3xl dark:bg-blue-900"></div>
-      </div>
-
       <div className="mb-6 text-center">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           Welcome back
