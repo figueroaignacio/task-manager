@@ -9,16 +9,25 @@ import { HomePage } from "@/pages/home";
 import { LoginPage } from "@/pages/login";
 import { RegisterPage } from "@/pages/register";
 
+// Components
+import { ProtectedRoute } from "@/modules/auth/components/protected-route";
+import { RedirectIfAuthenticated } from "@/modules/auth/components/redirect-if-authenticated";
+
 export function AppRouter() {
   return (
     <Routes>
       <Route index element={<HomePage />} />
-      <Route path="/auth" element={<AuthLayout />}>
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
+
+      <Route element={<RedirectIfAuthenticated />}>
+        <Route path="/auth" element={<AuthLayout />}>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+        </Route>
       </Route>
 
-      <Route path="dashboard" element={<DashboardPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<DashboardPage />} />
+      </Route>
     </Routes>
   );
 }
