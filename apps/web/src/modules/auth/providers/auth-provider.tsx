@@ -1,11 +1,10 @@
-// src/modules/auth/context/auth-provider.tsx
 import { ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import {
   getCurrentUser,
   login as loginService,
   logout as logoutService,
-  register as registerService, // 👈 import register
+  register as registerService,
 } from "../api";
 import { AuthContext, AuthContextType } from "../contexts/auth-context";
 import { User } from "../lib/definitions";
@@ -66,7 +65,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       console.error("Error al cerrar sesión:", error);
     } finally {
       setUser(null);
-      navigate("/auth/login");
+      navigate("/");
     }
   };
 

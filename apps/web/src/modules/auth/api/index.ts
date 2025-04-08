@@ -3,6 +3,7 @@ import { User } from "@/modules/auth/lib/definitions";
 
 export async function getCurrentUser(): Promise<User | null> {
   const response = await fetch(`${API_URL}/auth/me`, {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
@@ -10,8 +11,8 @@ export async function getCurrentUser(): Promise<User | null> {
   });
 
   if (response.ok) {
-    const userData = await response.json();
-    return userData;
+    const { user } = await response.json();
+    return user;
   } else if (response.status === 401) {
     return null;
   } else {

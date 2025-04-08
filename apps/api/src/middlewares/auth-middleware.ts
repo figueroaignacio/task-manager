@@ -18,14 +18,15 @@ export class AuthMiddleware {
     next: NextFunction
   ): Promise<void> {
     try {
-      // Extracting token from header
-      const authHeader = req.headers.authorization;
-      if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        res.status(401).json({ message: "No autorizado" });
+      const accessToken = req.cookies?.accessToken;
+
+      if (!accessToken) {
+        res
+          .status(401)
+          .json({ message: "No autorizado (sin token en cookies)" });
         return;
       }
 
-      const accessToken = authHeader.split(" ")[1];
       const user = await this.authService.validateAccessToken(accessToken);
 
       if (!user) {
@@ -33,12 +34,11 @@ export class AuthMiddleware {
         return;
       }
 
-      // Add user to request for later use
       req.user = user;
       next();
     } catch (error) {
-      res.status(401).json({ message: "No autorizado" });
-      return;
+      console.error("Error en middleware de auth:", error);
+      res.status(401).json({ message: "No autorizado (error interno)" });
     }
   }
 }

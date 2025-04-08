@@ -60,6 +60,13 @@ export class AuthController {
         user.id
       );
 
+      res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 1000 * 60 * 15,
+      });
+
       if (refreshToken) {
         res.cookie("refreshToken", refreshToken.token, {
           ...config.cookie,
@@ -69,7 +76,6 @@ export class AuthController {
 
       res.json({
         message: "Login exitoso",
-        accessToken,
         user: {
           id: user.id,
           email: user.email,
