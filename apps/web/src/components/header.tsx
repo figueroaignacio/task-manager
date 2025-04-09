@@ -15,7 +15,7 @@ export function Header() {
             <>
               <Link
                 to="/dashboard"
-                className="bg-purple-500 px-6 py-2 rounded-md text-white font-semibold"
+                className="bg-purple-900 px-6 py-2 rounded-md text-white font-semibold"
               >
                 Go to dashboard
               </Link>
@@ -24,7 +24,7 @@ export function Header() {
             <>
               <Link
                 to="/auth/login"
-                className="bg-purple-500 px-6 py-2 rounded-md text-white font-semibold"
+                className="bg-purple-900 px-6 py-2 rounded-md text-white font-semibold"
               >
                 Login
               </Link>

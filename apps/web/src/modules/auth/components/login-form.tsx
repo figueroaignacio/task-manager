@@ -71,7 +71,7 @@ export function LoginForm() {
                 errors.email
                   ? "border-red-300 dark:border-red-700"
                   : "border-gray-300 dark:border-gray-700"
-              } bg-white pl-10 pr-4 py-2.5 text-gray-900 shadow-sm transition-colors focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 dark:bg-gray-800 dark:text-white dark:focus:border-purple-400 dark:focus:ring-purple-400/20`}
+              } bg-white pl-10 pr-4 py-2.5 text-gray-900 shadow-sm transition-colors focus:border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500/20 dark:bg-gray-800 dark:text-white dark:focus:border-purple-400 dark:focus:ring-purple-400/20`}
               placeholder="your.email@example.com"
             />
           </div>
@@ -93,7 +93,7 @@ export function LoginForm() {
             </label>
             <Link
               to="/auth/forgot-password"
-              className="text-xs font-medium text-purple-600 hover:text-purple-500 dark:text-purple-400 dark:hover:text-purple-300"
+              className="text-xs font-medium text-purple-900 underline"
             >
               Forgot password?
             </Link>
@@ -110,7 +110,7 @@ export function LoginForm() {
                 errors.password
                   ? "border-red-300 dark:border-red-700"
                   : "border-gray-300 dark:border-gray-700"
-              } bg-white pl-10 pr-4 py-2.5 text-gray-900 shadow-sm transition-colors focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 dark:bg-gray-800 dark:text-white dark:focus:border-purple-400 dark:focus:ring-purple-400/20`}
+              } bg-white pl-10 pr-4 py-2.5 text-gray-900 shadow-sm transition-colors focus:border-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500/20 dark:bg-gray-800 dark:text-white dark:focus:border-purple-400 dark:focus:ring-purple-400/20`}
               placeholder="••••••••"
             />
           </div>
@@ -126,7 +126,7 @@ export function LoginForm() {
           <button
             type="submit"
             disabled={isSubmitting || isLoading}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-purple-600 px-5 py-2.5 text-center text-sm font-medium text-white shadow-lg transition-all hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-purple-500 dark:hover:bg-purple-600"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-purple-900 px-5 py-2.5 text-center text-sm font-medium text-white shadow-lg transition-all hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-purple-500 dark:hover:bg-purple-600"
           >
             {isSubmitting || isLoading ? (
               <>
@@ -163,7 +163,7 @@ export function LoginForm() {
           Don't have an account?{" "}
           <Link
             to="/auth/register"
-            className="font-medium text-purple-600 transition-colors hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300"
+            className="font-medium text-purple-900 underline"
           >
             Register
           </Link>

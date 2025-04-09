@@ -6,7 +6,7 @@ export function AuthLayout() {
     <>
       <Link
         to="/"
-        className="flex bg-purple-500 text-white py-2 px-12 rounded-md mt-5 ml-5 w-fit space-x-3"
+        className="flex bg-purple-900 text-white py-2 px-12 rounded-md mt-5 ml-5 w-fit space-x-3"
       >
         <ArrowLeft />
         <span>Go Back</span>
